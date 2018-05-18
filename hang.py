@@ -102,17 +102,24 @@ def not_end_game(secret_word, letters_guessed, guesses):
 
     return not is_word_guessed(secret_word, letters_guessed) and guesses > no_guesses
 
+def letter_not_valid():
+    print 'Sorry, this is not a valid character =)'
+
 def hangman(secret_word):
     guesses = 8
     empty = ''
     letters_guessed = []
+    letter = ''
+    permit = 1
 
     while not_end_game(secret_word, letters_guessed, guesses):
         print 'You have ', guesses, 'guesses left.'
 
         letter = print_available_letter(letters_guessed)
 
-        if letter in letters_guessed:
+        if not letter.isalpha() or len(letter) > permit:
+            letter_not_valid()
+        elif letter in letters_guessed:
             letter_was_guessed(letters_guessed, secret_word)
         elif letter in secret_word:
             letter_is_valid(letter, letters_guessed, secret_word)
