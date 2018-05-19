@@ -1,5 +1,7 @@
 import random
 import string
+import os
+import sys
 
 WORDLIST_FILENAME = "palavras.txt"
 
@@ -9,14 +11,29 @@ def load_words():
     take a while to finish.
     """
     print "Loading word list from file..."
-    # in_file: file
-    in_file = open(WORDLIST_FILENAME, 'r', 0)
+    in_file = None
+    path_exist = os.path.exists(WORDLIST_FILENAME)
+
+
+    in_file = file_exist(path_exist)
+
     # line: string
     line = in_file.readline()
     # wordlist: list of strings
     wordlist = string.split(line)
     print "  ", len(wordlist), "words loaded."
     return random.choice(wordlist)
+
+
+def file_exist(path_exist):
+    in_file = None
+
+    if(path_exist):
+        in_file = open(WORDLIST_FILENAME, 'r', 0)
+    else:
+        sys.exit("File does not exist or has a problem. Arrange and try again.")
+
+    return in_file
 
 
 def is_word_guessed(secret_word, letters_guessed):
